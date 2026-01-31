@@ -1,6 +1,6 @@
 // Defines the structure of the settings panel for each effect type
 
-export type ControlType = 'color' | 'number' | 'boolean' | 'select' | 'colorArray' | 'json';
+export type ControlType = 'color' | 'number' | 'boolean' | 'select' | 'colorArray' | 'json' | 'text';
 
 export interface ConfigField {
   key: string;
@@ -13,6 +13,15 @@ export interface ConfigField {
 }
 
 export const effectSchemas: Record<string, ConfigField[]> = {
+  'Hero Configuration': [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'title', label: 'Title', type: 'text' },
+    { key: 'description', label: 'Description', type: 'text' },
+    { key: 'mediaType', label: 'Media Type', type: 'select', options: ['video', 'image'] },
+    { key: 'mediaSrc', label: 'Media Source', type: 'text' },
+    { key: 'poster', label: 'Video Poster', type: 'text' },
+    { key: 'buttonText', label: 'Primary Button', type: 'text' },
+  ],
   'Particle Network': [
     { key: 'backgroundColor', label: 'Background Color', type: 'color' },
     { key: 'particleCount', label: 'Particle Count', type: 'number', min: 10, max: 300, step: 10 },
@@ -59,6 +68,15 @@ export const effectSchemas: Record<string, ConfigField[]> = {
 
 // Default configs for when adding a new layer
 export const defaultConfigs: Record<string, any> = {
+  'Hero Configuration': {
+      badge: "Web Development for Small Business",
+      title: "Ми створюємо сайти, які приносять прибуток",
+      description: "FluxForge допомагає локальному бізнесу вийти в онлайн. Сучасний дизайн, SEO-оптимізація та зручне управління.",
+      mediaType: 'video',
+      mediaSrc: "https://cdn.coverr.co/videos/coverr-working-in-a-luxury-office-4623/1080p.mp4",
+      poster: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop",
+      buttonText: "Замовити консультацію"
+  },
   'Particle Network': {
     particleCount: 80,
     connectionDistance: 248, 

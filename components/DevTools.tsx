@@ -65,20 +65,20 @@ const DevTools: React.FC = () => {
             <div className="fixed bottom-16 right-4 w-96 max-h-[80vh] bg-zinc-900/95 backdrop-blur shadow-2xl rounded-xl border border-zinc-700 z-[9999] flex flex-col overflow-hidden text-sm text-white font-sans">
                 {/* Header */}
                 <div className="p-3 border-b border-zinc-700 bg-zinc-800 font-bold flex justify-between">
-                    <span>Active Backgrounds ({instanceIds.length})</span>
+                    <span>Active Modules ({instanceIds.length})</span>
                 </div>
 
                 {/* Instance List */}
                 <div className="p-2 border-b border-zinc-700 max-h-32 overflow-y-auto bg-zinc-950/50">
-                    {instanceIds.length === 0 && <div className="text-zinc-500 italic p-2">No backgrounds detected.</div>}
+                    {instanceIds.length === 0 && <div className="text-zinc-500 italic p-2">No active modules detected.</div>}
                     {instanceIds.map(id => (
                         <div 
                             key={id} 
                             onClick={() => setSelectedId(id)}
                             className={`p-2 rounded cursor-pointer flex justify-between items-center mb-1 ${selectedId === id ? 'bg-indigo-600' : 'hover:bg-zinc-800'}`}
                         >
-                            <span className="font-mono text-xs">{id}</span>
-                            <span className="text-[10px] bg-black/30 px-2 py-0.5 rounded text-zinc-300">{registry.items[id].type}</span>
+                            <span className="font-mono text-xs truncate max-w-[150px]">{id}</span>
+                            <span className="text-[10px] bg-black/30 px-2 py-0.5 rounded text-zinc-300 truncate max-w-[120px]">{registry.items[id].type}</span>
                         </div>
                     ))}
                 </div>
@@ -101,19 +101,50 @@ const DevTools: React.FC = () => {
                                                 {field.type === 'number' && <span className="text-[10px] text-zinc-600 font-mono">{selectedItem.config[field.key]}</span>}
                                             </div>
 
-                                            {/* Reuse inputs logic */}
+                                            {/* --- Controls --- */}
+                                            
+                                            {/* Text Input */}
+                                            {field.type === 'text' && (
+                                                <input 
+                                                    type="text" 
+                                                    value={selectedItem.config[field.key] || ''} 
+                                                    onChange={(e) => updateConfig(field.key, e.target.value)} 
+                                                    className="w-full bg-zinc-800 border border-zinc-700 rounded px-2 py-1 text-xs focus:border-indigo-500 focus:outline-none"
+                                                />
+                                            )}
+
+                                            {/* Select Dropdown */}
+                                            {field.type === 'select' && (
+                                                <select 
+                                                    value={selectedItem.config[field.key]} 
+                                                    onChange={(e) => updateConfig(field.key, e.target.value)}
+                                                    className="w-full bg-zinc-800 border border-zinc-700 rounded px-2 py-1 text-xs focus:border-indigo-500 focus:outline-none"
+                                                >
+                                                    {field.options?.map(opt => (
+                                                        <option key={opt} value={opt}>{opt}</option>
+                                                    ))}
+                                                </select>
+                                            )}
+
+                                            {/* Color Picker */}
                                             {field.type === 'color' && (
                                                 <div className="flex gap-2">
                                                     <input type="color" value={parseColorValue(selectedItem.config[field.key]).hex} onChange={(e) => updateConfig(field.key, toRgbaString(e.target.value, parseColorValue(selectedItem.config[field.key]).alpha))} className="h-5 w-6 cursor-pointer border-0 bg-transparent p-0" />
                                                     <input type="range" min="0" max="1" step="0.01" value={parseColorValue(selectedItem.config[field.key]).alpha} onChange={(e) => updateConfig(field.key, toRgbaString(parseColorValue(selectedItem.config[field.key]).hex, parseFloat(e.target.value)))} className="flex-1 h-1 bg-zinc-700 rounded-lg appearance-none mt-2" />
                                                 </div>
                                             )}
+
+                                            {/* Number Slider */}
                                             {field.type === 'number' && (
                                                 <input type="range" min={field.min} max={field.max} step={field.step || 1} value={selectedItem.config[field.key]} onChange={(e) => updateConfig(field.key, parseFloat(e.target.value))} className="w-full h-1 bg-zinc-700 rounded-lg appearance-none" />
                                             )}
+
+                                            {/* Boolean Toggle */}
                                             {field.type === 'boolean' && (
                                                  <button onClick={() => updateConfig(field.key, !selectedItem.config[field.key])} className={`px-2 py-0.5 rounded text-xs ${selectedItem.config[field.key] ? 'bg-green-600' : 'bg-red-900/50'}`}>{selectedItem.config[field.key] ? 'ON' : 'OFF'}</button>
                                             )}
+
+                                            {/* Color Array */}
                                             {field.type === 'colorArray' && Array.isArray(selectedItem.config[field.key]) && (
                                                 <div className="grid grid-cols-5 gap-1">
                                                     {selectedItem.config[field.key].map((c: string, i: number) => (
@@ -151,7 +182,7 @@ const DevTools: React.FC = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="p-4 text-center text-zinc-500">Select a background to edit</div>
+                    <div className="p-4 text-center text-zinc-500">Select a module to edit</div>
                 )}
             </div>
         )}

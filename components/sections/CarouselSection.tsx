@@ -1,46 +1,19 @@
 import React, { ReactNode, useState } from 'react';
+import { portfolioItems } from '../../lib/content';
 
 interface CarouselSectionProps {
   background: ReactNode;
 }
 
-// Portfolio Cases
-const slides = [
-  {
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2370&auto=format&fit=crop",
-    title: "Cyber Security Hub",
-    category: "Fintech • Interface Design",
-    year: "2024"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1558655146-d09347e0b7a8?q=80&w=2370&auto=format&fit=crop",
-    title: "Neon Nexus",
-    category: "E-Commerce • WebGL",
-    year: "2023"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
-    title: "Apex Analytics",
-    category: "SaaS • Dashboard",
-    year: "2023"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2264&auto=format&fit=crop",
-    title: "Aero Space",
-    category: "Brand Identity • 3D",
-    year: "2024"
-  }
-];
-
 export const CarouselSection: React.FC<CarouselSectionProps> = ({ background }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % slides.length);
+    setCurrentIndex((prev) => (prev + 1) % portfolioItems.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? portfolioItems.length - 1 : prev - 1));
   };
 
   return (
@@ -66,13 +39,13 @@ export const CarouselSection: React.FC<CarouselSectionProps> = ({ background }) 
         {/* Carousel Container */}
         <div className="relative max-w-5xl mx-auto">
           
-          {/* Main Image Window - Aspect ratio optimized for mobile (closer to square) and desktop (widescreen) */}
+          {/* Main Image Window */}
           <div className="relative aspect-[4/3] md:aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-neutral-900">
             <div 
                 className="flex transition-transform duration-500 md:duration-700 ease-in-out h-full"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-                {slides.map((slide, index) => (
+                {portfolioItems.map((slide, index) => (
                     <div key={index} className="w-full h-full flex-shrink-0 relative">
                         <img 
                             src={slide.image} 
@@ -81,7 +54,7 @@ export const CarouselSection: React.FC<CarouselSectionProps> = ({ background }) 
                         />
                         {/* Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6 md:p-12">
-                            {/* Text Container - Always visible on mobile, animated on desktop */}
+                            {/* Text Container */}
                             <div className="transform transition-all duration-500 translate-y-0 opacity-100 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
                                 <div className="flex items-center gap-3 md:gap-4 mb-2">
                                     <span className="text-amber-400 font-mono text-[10px] md:text-xs uppercase tracking-wider">{slide.category}</span>
@@ -95,7 +68,7 @@ export const CarouselSection: React.FC<CarouselSectionProps> = ({ background }) 
                 ))}
             </div>
 
-            {/* Controls - Always visible on mobile (opacity-100), fade in on hover for desktop */}
+            {/* Controls */}
             <button 
                 onClick={prevSlide}
                 className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100 active:scale-95"
@@ -113,10 +86,10 @@ export const CarouselSection: React.FC<CarouselSectionProps> = ({ background }) 
           {/* Indicators */}
           <div className="flex justify-between items-center mt-6 px-2">
              <div className="text-neutral-500 text-xs md:text-sm font-mono">
-                 0{currentIndex + 1} / 0{slides.length}
+                 0{currentIndex + 1} / 0{portfolioItems.length}
              </div>
              <div className="flex gap-2">
-                {slides.map((_, index) => (
+                {portfolioItems.map((_, index) => (
                     <button
                         key={index}
                         onClick={() => setCurrentIndex(index)}
@@ -127,7 +100,6 @@ export const CarouselSection: React.FC<CarouselSectionProps> = ({ background }) 
                     />
                 ))}
             </div>
-            {/* Mobile View Full Link (Visible only on mobile here) */}
             <div className="md:hidden">
                 <a href="#" className="text-amber-400 font-medium text-xs">
                     Всі роботи →

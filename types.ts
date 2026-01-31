@@ -9,6 +9,16 @@ export interface BackgroundProps<T = any> {
 
 // --- Configuration Interfaces ---
 
+export interface HeroConfig {
+  badge?: string;
+  title?: string;
+  description?: string;
+  mediaType?: 'video' | 'image';
+  mediaSrc?: string;
+  poster?: string;
+  buttonText?: string;
+}
+
 export interface ParticleConfig {
   particleCount?: number;
   connectionDistance?: number;

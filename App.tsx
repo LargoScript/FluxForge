@@ -1,5 +1,6 @@
 import React from 'react';
 import { RegistryProvider } from './lib/context/RegistryContext';
+import { heroContent } from './lib/content'; // Import content
 import DevTools from './components/DevTools';
 
 // Backgrounds
@@ -24,11 +25,21 @@ const App: React.FC = () => {
             
             {/* 
                SECTION 1: HERO 
-               Using a Video Background as primary, with a subtle Gradient Mesh overlay
+               Now with id="hero-section" so you can edit it in DevTools.
+               The props act as defaults.
             */}
             <HeroSection 
-                mediaType="video"
-                mediaSrc="https://cdn.coverr.co/videos/coverr-working-in-a-luxury-office-4623/1080p.mp4"
+                id="hero-section"
+                config={{
+                    mediaType: 'video',
+                    mediaSrc: heroContent.videoSrc,
+                    poster: heroContent.poster,
+                    // We combine title lines for the editable field
+                    title: `${heroContent.title.line1} ${heroContent.title.highlight}`,
+                    description: heroContent.description,
+                    badge: heroContent.badge,
+                    buttonText: heroContent.buttons.primary
+                }}
                 background={
                     <GradientMesh 
                         id="hero-mesh" 
@@ -46,7 +57,6 @@ const App: React.FC = () => {
 
             {/* 
                SECTION 2: FEATURES (Services)
-               Using Retro Grid
             */}
             <FeatureGrid 
                 background={
@@ -63,7 +73,6 @@ const App: React.FC = () => {
 
             {/* 
                SECTION 3: CAROUSEL (Showcase)
-               Using Floating Shapes
             */}
             <CarouselSection
                 background={
@@ -80,7 +89,6 @@ const App: React.FC = () => {
 
             {/* 
                SECTION 4: FOOTER
-               Using Lava Lamp
             */}
             <Footer 
                 background={
