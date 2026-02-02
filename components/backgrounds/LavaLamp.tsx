@@ -9,7 +9,6 @@ interface BlobData {
   vx: number;
   vy: number;
   size: number;
-  element: HTMLDivElement | null;
 }
 
 const LavaLamp: React.FC<BackgroundProps<LavaLampConfig>> = ({ children, className = '', config: propsConfig, id }) => {
@@ -18,6 +17,8 @@ const LavaLamp: React.FC<BackgroundProps<LavaLampConfig>> = ({ children, classNa
   
   // We use a ref for blobs to maintain state across renders without triggering re-renders
   const blobsRef = useRef<BlobData[]>([]);
+  // We use a mutable ref array to store DOM nodes.
+  const domRefs = useRef<(HTMLDivElement | null)[]>([]);
   const requestRef = useRef<number>(0);
   
   const bg = config?.backgroundColor || '#320032';
@@ -27,41 +28,47 @@ const LavaLamp: React.FC<BackgroundProps<LavaLampConfig>> = ({ children, classNa
 
   const isHex = (color?: string) => color?.startsWith('#') || color?.startsWith('rgb') || color === 'transparent';
 
-  // 1. Data Initialization (Runs only when count or container size changes significantly)
+  // 1. Data Initialization & Re-initialization
   useEffect(() => {
     if (!containerRef.current) return;
     const { clientWidth: width, clientHeight: height } = containerRef.current;
 
-    // Only regenerate if count mismatches to preserve positions when just changing speed
+    // Initialize if empty or regenerate if count changes significantly
     if (blobsRef.current.length !== count) {
         const newBlobs: BlobData[] = [];
+        // Preserve existing blobs if possible to avoid total reset
+        const existing = blobsRef.current;
+        
         for (let i = 0; i < count; i++) {
-            const size = Math.min(width, height) * (0.15 + Math.random() * 0.25); 
-            newBlobs.push({
-                id: i,
-                x: Math.random() * (width - size),
-                y: Math.random() * (height - size),
-                vx: (Math.random() - 0.5) * 2, 
-                vy: (Math.random() - 0.5) * 2,
-                size: size,
-                element: null // Will be assigned via ref callback
-            });
+            if (i < existing.length) {
+                newBlobs.push(existing[i]);
+            } else {
+                const size = Math.min(width, height) * (0.15 + Math.random() * 0.25); 
+                newBlobs.push({
+                    id: i,
+                    x: Math.random() * (width - size),
+                    y: Math.random() * (height - size),
+                    vx: (Math.random() - 0.5) * 2, 
+                    vy: (Math.random() - 0.5) * 2,
+                    size: size
+                });
+            }
         }
         blobsRef.current = newBlobs;
+        // Resize domRefs array to match
+        domRefs.current = domRefs.current.slice(0, count);
     }
   }, [count]); 
 
   // 2. Animation Loop
-  // Removed 'count' from dependency to prevent loop restart race conditions.
-  // The loop simply reads whatever is in blobsRef.current.
   useEffect(() => {
     const animate = () => {
       if (!containerRef.current) return;
       const { clientWidth: width, clientHeight: height } = containerRef.current;
 
-      blobsRef.current.forEach(blob => {
-        // If element isn't mounted yet (e.g. right after count change), skip this frame
-        if (!blob.element) return;
+      blobsRef.current.forEach((blob, i) => {
+        const el = domRefs.current[i];
+        if (!el) return;
 
         blob.x += blob.vx * speedMultiplier;
         blob.y += blob.vy * speedMultiplier;
@@ -83,7 +90,7 @@ const LavaLamp: React.FC<BackgroundProps<LavaLampConfig>> = ({ children, classNa
             blob.vy *= -1;
         }
 
-        blob.element.style.transform = `translate(${blob.x}px, ${blob.y}px)`;
+        el.style.transform = `translate(${blob.x}px, ${blob.y}px)`;
       });
 
       requestRef.current = requestAnimationFrame(animate);
@@ -91,7 +98,7 @@ const LavaLamp: React.FC<BackgroundProps<LavaLampConfig>> = ({ children, classNa
 
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
-  }, [speedMultiplier]); // Only restart if speed changes (to capture new speed value closure)
+  }, [speedMultiplier, count]); 
 
   return (
     <div 
@@ -99,34 +106,25 @@ const LavaLamp: React.FC<BackgroundProps<LavaLampConfig>> = ({ children, classNa
         className={`relative w-full h-full min-h-screen overflow-hidden ${!isHex(bg) ? bg : ''} ${className}`}
         style={{ 
             backgroundColor: isHex(bg) ? bg : undefined,
-            filter: 'contrast(200%) saturate(200%) brightness(0.7)'
+            filter: 'contrast(150%) brightness(100%)'
         }}
     >
       <div className="absolute inset-0 w-full h-full filter blur-[2.5vw]">
           {Array.from({ length: count }).map((_, i) => {
               const color = colors[i % colors.length];
-              // Safe access in case render happens before useEffect updates ref
               const blobData = blobsRef.current[i]; 
               const size = blobData?.size || 100; 
 
               return (
                 <div 
                     key={i}
-                    ref={(el) => {
-                        // Assign DOM element to our data model
-                        if (blobsRef.current[i]) {
-                            blobsRef.current[i].element = el;
-                            // Set initial position immediately to prevent jump
-                            if (el && blobsRef.current[i]) {
-                                el.style.transform = `translate(${blobsRef.current[i].x}px, ${blobsRef.current[i].y}px)`;
-                            }
-                        }
-                    }}
+                    ref={(el) => { domRefs.current[i] = el; }}
                     className="absolute rounded-full aspect-square will-change-transform"
                     style={{ 
                         width: size, 
                         height: size,
                         backgroundColor: color,
+                        transform: blobData ? `translate(${blobData.x}px, ${blobData.y}px)` : undefined
                     }}
                 ></div>
               );

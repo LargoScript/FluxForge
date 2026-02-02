@@ -44,11 +44,29 @@ const App: React.FC = () => {
                     <GradientMesh 
                         id="hero-mesh" 
                         config={{ 
-                            backgroundColor: 'transparent',
-                            animationSpeed: 15,
+                            backgroundColor: 'rgba(0, 0, 0, 0.49)',
+                            animationSpeed: 7,
                             items: [
-                                { color: '#fbbf24', top: '20%', left: '80%', width: '30vw', height: '30vw', opacity: 0.2, animationDelay: '0s', animationDuration: '15s' },
-                                { color: '#d97706', top: '70%', left: '10%', width: '25vw', height: '25vw', opacity: 0.15, animationDelay: '4s', animationDuration: '12s' }
+                                { 
+                                    color: "#fbbf24", 
+                                    top: "20%", 
+                                    left: "80%", 
+                                    width: "30vw", 
+                                    height: "30vw", 
+                                    opacity: 0.2, 
+                                    animationDelay: "0s", 
+                                    animationDuration: "15s" 
+                                },
+                                { 
+                                    color: "#d97706", 
+                                    top: "70%", 
+                                    left: "10%", 
+                                    width: "25vw", 
+                                    height: "25vw", 
+                                    opacity: 0.15, 
+                                    animationDelay: "4s", 
+                                    animationDuration: "12s" 
+                                }
                             ]
                         }} 
                     />
@@ -63,9 +81,9 @@ const App: React.FC = () => {
                     <RetroGrid 
                         id="features-grid" 
                         config={{ 
-                            gridColor: '#451a03', 
-                            backgroundColor: '#000000',
-                            animationSpeed: 5 
+                            gridColor: "rgba(174, 170, 167, 1)",
+                            backgroundColor: "rgba(69, 58, 58, 0.2)",
+                            animationSpeed: 5
                         }} 
                     />
                 } 
@@ -79,9 +97,14 @@ const App: React.FC = () => {
                     <FloatingShapes
                         id="showcase-shapes"
                         config={{
-                            backgroundColor: '#0f172a',
+                            backgroundColor: "#0f172a",
                             shapeCount: 6,
-                            colors: ['#38bdf8', '#818cf8', '#c084fc', '#2dd4bf']
+                            colors: [
+                                "#38bdf8",
+                                "#818cf8",
+                                "#c084fc",
+                                "#2dd4bf"
+                            ]
                         }}
                     />
                 }

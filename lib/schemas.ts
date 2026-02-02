@@ -71,7 +71,7 @@ export const defaultConfigs: Record<string, any> = {
   'Hero Configuration': {
       badge: "Web Development for Small Business",
       title: "Ми створюємо сайти, які приносять прибуток",
-      description: "FluxForge допомагає локальному бізнесу вийти в онлайн. Сучасний дизайн, SEO-оптимізація та зручне управління.",
+      description: "FluxForge допомагає локальному бізнесу вийти в онлайн. Сучасний дизайн, SEO-оптимізація та зручне управління — все, що потрібно для вашого успіху.",
       mediaType: 'video',
       mediaSrc: "https://cdn.coverr.co/videos/coverr-working-in-a-luxury-office-4623/1080p.mp4",
       poster: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop",
@@ -91,19 +91,35 @@ export const defaultConfigs: Record<string, any> = {
     backgroundColor: 'transparent',
   },
   'Gradient Mesh': {
-    backgroundColor: '#0f172a',
+    backgroundColor: 'rgba(0, 0, 0, 0.49)',
     animationSpeed: 7,
     items: [
-      { color: '#a855f7', top: '0%', left: '-5%', width: '20rem', height: '20rem', animationDelay: '0s', animationDuration: '7s', opacity: 0.7 },
-      { color: '#eab308', top: '0%', left: '80%', width: '20rem', height: '20rem', animationDelay: '2s', animationDuration: '7s', opacity: 0.7 },
-      { color: '#ec4899', top: '80%', left: '20%', width: '20rem', height: '20rem', animationDelay: '4s', animationDuration: '7s', opacity: 0.7 },
-      { color: '#3b82f6', top: '60%', left: '60%', width: '24rem', height: '24rem', animationDelay: '5s', animationDuration: '10s', opacity: 0.6 }
+        { 
+            color: "#fbbf24", 
+            top: "20%", 
+            left: "80%", 
+            width: "30vw", 
+            height: "30vw", 
+            opacity: 0.2, 
+            animationDelay: "0s", 
+            animationDuration: "15s" 
+        },
+        { 
+            color: "#d97706", 
+            top: "70%", 
+            left: "10%", 
+            width: "25vw", 
+            height: "25vw", 
+            opacity: 0.15, 
+            animationDelay: "4s", 
+            animationDuration: "12s" 
+        }
     ]
   },
   'Retro Grid': {
-    gridColor: '#444444',
-    backgroundColor: '#0a0a0a',
-    animationSpeed: 1,
+    gridColor: "rgba(174, 170, 167, 1)",
+    backgroundColor: "rgba(69, 58, 58, 0.2)",
+    animationSpeed: 5,
   },
   'Sine Waves': {
     colorStart: '#1e1b4b',
@@ -113,9 +129,14 @@ export const defaultConfigs: Record<string, any> = {
     amplitude: 50,
   },
   'Floating Shapes': {
-    backgroundColor: '#f8fafc',
-    shapeCount: 5,
-    colors: ['#34d399', '#14b8a6', '#67e8f9', '#059669', '#5eead4'],
+    backgroundColor: "#0f172a",
+    shapeCount: 6,
+    colors: [
+        "#38bdf8",
+        "#818cf8",
+        "#c084fc",
+        "#2dd4bf"
+    ]
   },
   'Lava Lamp': {
     backgroundColor: '#320032',
