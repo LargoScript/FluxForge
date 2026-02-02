@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 
 interface FeatureGridProps {
   background: ReactNode;
+  id?: string;
 }
 
 const services = [
@@ -49,9 +50,9 @@ const services = [
   }
 ];
 
-export const FeatureGrid: React.FC<FeatureGridProps> = ({ background }) => {
+export const FeatureGrid: React.FC<FeatureGridProps> = ({ background, id }) => {
   return (
-    <section className="relative py-32 overflow-hidden bg-neutral-900 border-t border-white/5">
+    <section id={id} className="relative py-32 overflow-hidden bg-neutral-900 border-t border-white/5">
       {/* Background with opacity control */}
       <div className="absolute inset-0 z-0 opacity-40">
         {background}

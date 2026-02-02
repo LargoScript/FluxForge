@@ -2,11 +2,12 @@ import React, { ReactNode } from 'react';
 
 interface FooterProps {
   background: ReactNode;
+  id?: string;
 }
 
-export const Footer: React.FC<FooterProps> = ({ background }) => {
+export const Footer: React.FC<FooterProps> = ({ background, id }) => {
   return (
-    <footer className="relative h-[500px] flex flex-col justify-end overflow-hidden">
+    <footer id={id} className="relative h-[500px] flex flex-col justify-end overflow-hidden">
       <div className="absolute inset-0 z-0">
         {background}
       </div>

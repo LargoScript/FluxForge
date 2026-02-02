@@ -15,17 +15,24 @@ const Waves: React.FC<BackgroundProps<WaveConfig>> = ({ children, className = ''
     if (!canvas || !container) return;
 
     systemRef.current = new WaveSystem(canvas, config);
-
-    const resize = () => {
-      systemRef.current?.resize(container.clientWidth, container.clientHeight);
-    };
-
-    window.addEventListener('resize', resize);
-    resize();
     systemRef.current.start();
 
+    // Use ResizeObserver to track container size changes.
+    // Note: We send updates immediately. The WaveSystem handles "deferred resizing"
+    // internally within the animation loop to prevent flickering.
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+         if (systemRef.current) {
+            const { width, height } = entry.contentRect;
+            systemRef.current.resize(width, height);
+         }
+      }
+    });
+
+    resizeObserver.observe(container);
+
     return () => {
-      window.removeEventListener('resize', resize);
+      resizeObserver.disconnect();
       systemRef.current?.stop();
     };
   }, []);

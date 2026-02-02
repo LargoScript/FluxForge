@@ -3,9 +3,10 @@ import { portfolioItems } from '../../lib/content';
 
 interface CarouselSectionProps {
   background: ReactNode;
+  id?: string;
 }
 
-export const CarouselSection: React.FC<CarouselSectionProps> = ({ background }) => {
+export const CarouselSection: React.FC<CarouselSectionProps> = ({ background, id }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
@@ -17,7 +18,7 @@ export const CarouselSection: React.FC<CarouselSectionProps> = ({ background }) 
   };
 
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden border-t border-white/5">
+    <section id={id} className="relative py-16 md:py-24 overflow-hidden border-t border-white/5">
       {/* Dynamic Background Layer */}
       <div className="absolute inset-0 z-0 opacity-60">
         {background}

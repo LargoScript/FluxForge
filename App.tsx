@@ -9,12 +9,14 @@ import RetroGrid from './components/backgrounds/RetroGrid';
 import LavaLamp from './components/backgrounds/LavaLamp';
 import ParticleNetwork from './components/backgrounds/ParticleNetwork';
 import FloatingShapes from './components/backgrounds/FloatingShapes';
+import Waves from './components/backgrounds/Waves';
 
 // Sections
 import { Navbar } from './components/sections/Navbar';
 import { HeroSection } from './components/sections/HeroSection';
 import { FeatureGrid } from './components/sections/FeatureGrid';
 import { CarouselSection } from './components/sections/CarouselSection';
+import { FAQSection } from './components/sections/FAQSection';
 import { Footer } from './components/sections/Footer';
 
 const App: React.FC = () => {
@@ -25,8 +27,6 @@ const App: React.FC = () => {
             
             {/* 
                SECTION 1: HERO 
-               Now with id="hero-section" so you can edit it in DevTools.
-               The props act as defaults.
             */}
             <HeroSection 
                 id="hero-section"
@@ -34,7 +34,6 @@ const App: React.FC = () => {
                     mediaType: 'video',
                     mediaSrc: heroContent.videoSrc,
                     poster: heroContent.poster,
-                    // We combine title lines for the editable field
                     title: `${heroContent.title.line1} ${heroContent.title.highlight}`,
                     description: heroContent.description,
                     badge: heroContent.badge,
@@ -75,8 +74,10 @@ const App: React.FC = () => {
 
             {/* 
                SECTION 2: FEATURES (Services)
+               ID: "services" for Navbar link #services
             */}
             <FeatureGrid 
+                id="services"
                 background={
                     <RetroGrid 
                         id="features-grid" 
@@ -90,9 +91,11 @@ const App: React.FC = () => {
             />
 
             {/* 
-               SECTION 3: CAROUSEL (Showcase)
+               SECTION 3: CAROUSEL (Portfolio)
+               ID: "portfolio" for Navbar link #portfolio
             */}
             <CarouselSection
+                id="portfolio"
                 background={
                     <FloatingShapes
                         id="showcase-shapes"
@@ -111,9 +114,32 @@ const App: React.FC = () => {
             />
 
             {/* 
-               SECTION 4: FOOTER
+               SECTION 4: FAQ
+               ID: "faq" for Navbar link #faq
+            */}
+            <FAQSection
+                id="faq"
+                background={
+                    <Waves
+                        id="faq-waves"
+                        config={{
+                            colorStart: '#0f172a',
+                            colorEnd: '#000000',
+                            waveColor: 'rgba(217, 119, 6, 0.2)', // Amber-ish
+                            speed: 0.8,
+                            amplitude: 40,
+                            parallax: 0.6
+                        }}
+                    />
+                }
+            />
+
+            {/* 
+               SECTION 5: FOOTER (Contacts)
+               ID: "contact" for Navbar link #contact
             */}
             <Footer 
+                id="contact"
                 background={
                     <LavaLamp 
                         id="footer-lava" 

@@ -39,6 +39,7 @@ export interface WaveConfig {
   waveColor?: string;
   speed?: number;
   amplitude?: number;
+  parallax?: number; // 0 = normal scroll, 1 = fixed position
 }
 
 export interface GridConfig {

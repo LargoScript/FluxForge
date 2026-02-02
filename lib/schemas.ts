@@ -52,6 +52,7 @@ export const effectSchemas: Record<string, ConfigField[]> = {
     { key: 'waveColor', label: 'Wave Color', type: 'color' },
     { key: 'speed', label: 'Flow Speed', type: 'number', min: 0.1, max: 10, step: 0.1 },
     { key: 'amplitude', label: 'Height', type: 'number', min: 10, max: 200 },
+    { key: 'parallax', label: 'Parallax Effect', type: 'number', min: 0, max: 1, step: 0.1 },
   ],
   'Floating Shapes': [
     { key: 'backgroundColor', label: 'Background', type: 'color' },
@@ -127,6 +128,7 @@ export const defaultConfigs: Record<string, any> = {
     waveColor: 'rgba(129, 140, 248, 0.3)',
     speed: 1,
     amplitude: 50,
+    parallax: 0.5,
   },
   'Floating Shapes': {
     backgroundColor: "#0f172a",
