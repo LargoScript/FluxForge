@@ -1,0 +1,162 @@
+import React from 'react';
+import { RegistryProvider } from './lib/context/RegistryContext';
+import { heroContent } from './lib/content'; // Import content
+import DevTools from './components/DevTools';
+
+// Backgrounds
+import GradientMesh from './components/backgrounds/GradientMesh';
+import RetroGrid from './components/backgrounds/RetroGrid';
+import LavaLamp from './components/backgrounds/LavaLamp';
+import ParticleNetwork from './components/backgrounds/ParticleNetwork';
+import FloatingShapes from './components/backgrounds/FloatingShapes';
+import Waves from './components/backgrounds/Waves';
+
+// Sections
+import { Navbar } from './components/sections/Navbar';
+import { HeroSection } from './components/sections/HeroSection';
+import { FeatureGrid } from './components/sections/FeatureGrid';
+import { CarouselSection } from './components/sections/CarouselSection';
+import { FAQSection } from './components/sections/FAQSection';
+import { Footer } from './components/sections/Footer';
+
+const App: React.FC = () => {
+  return (
+    <RegistryProvider>
+        <div className="bg-black min-h-screen text-white selection:bg-amber-500 selection:text-black">
+            <Navbar />
+            
+            {/* 
+               SECTION 1: HERO 
+            */}
+            <HeroSection 
+                id="hero-section"
+                config={{
+                    mediaType: 'video',
+                    mediaSrc: heroContent.videoSrc,
+                    poster: heroContent.poster,
+                    title: `${heroContent.title.line1} ${heroContent.title.highlight}`,
+                    description: heroContent.description,
+                    badge: heroContent.badge,
+                    buttonText: heroContent.buttons.primary
+                }}
+                background={
+                    <GradientMesh 
+                        id="hero-mesh" 
+                        config={{ 
+                            backgroundColor: 'rgba(0, 0, 0, 0.49)',
+                            animationSpeed: 7,
+                            items: [
+                                { 
+                                    color: "#fbbf24", 
+                                    top: "20%", 
+                                    left: "80%", 
+                                    width: "30vw", 
+                                    height: "30vw", 
+                                    opacity: 0.2, 
+                                    animationDelay: "0s", 
+                                    animationDuration: "15s" 
+                                },
+                                { 
+                                    color: "#d97706", 
+                                    top: "70%", 
+                                    left: "10%", 
+                                    width: "25vw", 
+                                    height: "25vw", 
+                                    opacity: 0.15, 
+                                    animationDelay: "4s", 
+                                    animationDuration: "12s" 
+                                }
+                            ]
+                        }} 
+                    />
+                } 
+            />
+
+            {/* 
+               SECTION 2: FEATURES (Services)
+               ID: "services" for Navbar link #services
+            */}
+            <FeatureGrid 
+                id="services"
+                background={
+                    <RetroGrid 
+                        id="features-grid" 
+                        config={{ 
+                            gridColor: "rgba(174, 170, 167, 1)",
+                            backgroundColor: "rgba(69, 58, 58, 0.2)",
+                            animationSpeed: 5
+                        }} 
+                    />
+                } 
+            />
+
+            {/* 
+               SECTION 3: CAROUSEL (Portfolio)
+               ID: "portfolio" for Navbar link #portfolio
+            */}
+            <CarouselSection
+                id="portfolio"
+                background={
+                    <FloatingShapes
+                        id="showcase-shapes"
+                        config={{
+                            backgroundColor: "#0f172a",
+                            shapeCount: 6,
+                            colors: [
+                                "#38bdf8",
+                                "#818cf8",
+                                "#c084fc",
+                                "#2dd4bf"
+                            ]
+                        }}
+                    />
+                }
+            />
+
+            {/* 
+               SECTION 4: FAQ
+               ID: "faq" for Navbar link #faq
+            */}
+            <FAQSection
+                id="faq"
+                background={
+                    <Waves
+                        id="faq-waves"
+                        config={{
+                            colorStart: '#0f172a',
+                            colorEnd: '#000000',
+                            waveColor: 'rgba(217, 119, 6, 0.2)', // Amber-ish
+                            speed: 0.8,
+                            amplitude: 40,
+                            parallax: 0.6
+                        }}
+                    />
+                }
+            />
+
+            {/* 
+               SECTION 5: FOOTER (Contacts)
+               ID: "contact" for Navbar link #contact
+            */}
+            <Footer 
+                id="contact"
+                background={
+                    <LavaLamp 
+                        id="footer-lava" 
+                        config={{ 
+                            backgroundColor: '#111', 
+                            colors: ['#78350f', '#92400e', '#b45309'], 
+                            speed: 0.3,
+                            blobCount: 6
+                        }} 
+                    />
+                } 
+            />
+
+            <DevTools />
+        </div>
+    </RegistryProvider>
+  );
+};
+
+export default App;
