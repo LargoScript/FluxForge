@@ -2,20 +2,18 @@
 
 A comprehensive toolkit for creating, configuring, and exporting high-performance dynamic backgrounds for React applications.
 
-## 🚀 Deployment (Automatic)
+## 🚀 Quick Start
 
-This project is configured with **GitHub Actions**. You do **not** need to use the terminal to deploy.
+1.  **Open the App**: You will see the **Sandbox** interface by default.
+2.  **Select a Layer**: Click on items in the "Layers" list (e.g., "Gradient Mesh").
+3.  **Configure**: Use the "Controls" tab to adjust colors, speed, and counts.
+4.  **Export**: Switch to the **`< > CODE`** tab to copy the ready-to-use code.
 
-1.  **Push Changes**: Simply save your code and push it to GitHub (or let your AI builder do it).
-2.  **Wait**: GitHub will automatically build your site. This takes about 2-3 minutes.
-3.  **Setup (One time only)**:
-    *   Go to your GitHub Repository.
-    *   Click **Settings** -> **Pages** (on the left).
-    *   Under **Build and deployment** > **Source**, select **Deploy from a branch**.
-    *   Under **Branch**, select `gh-pages` and `/ (root)`. (Note: The `gh-pages` branch will be created automatically after the first successful action run).
-    *   Click **Save**.
+## 🚀 Deployment (GitHub Pages)
 
-Your site will be live at the link displayed at the top of the Pages settings!
+1. Push to `main` — GitHub Actions will build and deploy to the `gh-pages` branch.
+2. In the repo **Settings → Pages**: set **Source** to **Deploy from a branch**, branch `gh-pages`, folder `/ (root)`.
+3. Site will be at **https://largoscript.github.io/FluxForge/**.
 
 ---
 
@@ -85,3 +83,36 @@ Best for CMS-like environments where you want to edit backgrounds "Live" on the 
 ```
 
 When using the Registry, changing settings in the DevTools panel updates the site in real-time without code changes (during the session).
+
+---
+
+## 🎨 Effect Details
+
+### Gradient Mesh
+*   **Description**: Soft, moving blobs of color.
+*   **Best for**: Hero sections, modern SaaS landing pages.
+*   **Power Feature**: Switch to **JSON** tab to manually add/remove specific blobs or set exact `top/left/right/bottom` positions.
+
+### Particle Network
+*   **Description**: Canvas-based constellation effect. Nodes connect when close.
+*   **Best for**: Tech, AI, Data visualization themes.
+*   **Performance**: Uses HTML5 Canvas. Lower `particleCount` on mobile for better FPS.
+
+### Retro Grid
+*   **Description**: 80s Synthwave moving 3D grid.
+*   **Best for**: Cyberpunk, gaming, or retro-futuristic designs.
+
+### Lava Lamp
+*   **Description**: Fluid, organic floating bubbles with "gooey" interactions.
+*   **Best for**: Creative agencies, playful brands.
+*   **Fix Note**: Speed and Count can be adjusted live without stopping animations.
+
+---
+
+## 📂 File Structure
+
+*   `components/Sandbox.tsx`: The main editor UI.
+*   `components/DevTools.tsx`: The floating floating panel for the Registry system.
+*   `components/backgrounds/`: Individual background components.
+*   `lib/schemas.ts`: Defines the UI controls (sliders, color pickers) for each effect.
+*   `lib/effects/`: Heavy-lifting math logic (Canvas classes) kept separate from React components.
